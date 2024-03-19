@@ -1,16 +1,28 @@
 import styled from "styled-components"
 import { InnerLayout } from "../../styles/Layout";
-import Form from "../Form/Form";
-import IncomeItem from "../IncomeItem/IncomeItem";
+import TransactionForm from "../Form/TransactionForm";
+import TransactionItem from "../TransactionItem/TransactionItem";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect } from "react";
 
-
+const incomeOptions = [
+    { text: 'Select option', value: '', disabled: true },
+    { text: 'Salary', value: 'salary' },
+    { text: 'Freelancing', value: 'freelancing' },
+    { text: 'Investments', value: 'investments' },
+    { text: 'Stocks', value: 'stocks' },
+    { text: 'Bitcoin', value: 'bitcoin' },
+    { text: 'Bank Transfer', value: 'bank' },
+    { text: 'Youtube', value: 'youtube' },
+    { text: 'Other', value: 'other' }
+];
 const Income = () => {
-    const { incomes, getIncomes, deleteIncome, totalIncomes } = useGlobalContext();
+    const { incomes, getIncomes, deleteIncome, totalIncomes, setError } = useGlobalContext();
 
     useEffect(() => {
         getIncomes();
+        setError('');
+        // eslint-disable-next-line
     }, [])
 
     return (
@@ -22,12 +34,16 @@ const Income = () => {
                 </h2>
                 <div className="income-content">
                     <div className="form-container">
-                        <Form />
+                        <TransactionForm
+                            type={'income'}
+                            options={incomeOptions}
+                            btnText={'Add Income'}
+                        />
                     </div>
                     <div className="incomes">
                         {incomes && incomes.map(income => {
                             const { _id, title, amount, date, category, description } = income;
-                            return <IncomeItem 
+                            return <TransactionItem 
                                 key={_id}
                                 id={_id}
                                 type={'income'}

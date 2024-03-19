@@ -9,15 +9,20 @@ import { useEffect, useState, startTransition } from "react";
 const Navigation = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [active, setActive] = useState(location.state.id);
+    const [active, setActive] = useState(1);
 
     useEffect(() => {
-        setActive(location.state.id);
+        findIdByLink(location.pathname)
     }, [location])
+
+    const findIdByLink = (link) => {
+        const menuItem = menuItems.find(item => item.link === link);
+        setActive((menuItem && menuItem.id) || null);
+    };
 
     const handleClick = (item) => {
         startTransition(() => {
-            navigate(item.link, { state: { id: item.id }});
+            navigate(item.link);
         });
     };
 
@@ -51,7 +56,7 @@ const NavStyled = styled.nav`
     background: rgba(252, 246, 249, 0.78);
     border: 3px solid #FFFFFF;
     backdrop-filter: blur(4.5px);
-    border-radius: 32px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

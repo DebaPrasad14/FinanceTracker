@@ -1,34 +1,50 @@
 import styled from "styled-components"
 import { InnerLayout } from "../../styles/Layout";
-import Form from "../Form/Form";
-import IncomeItem from "../IncomeItem/IncomeItem";
+import TransactionForm from "../Form/TransactionForm";
+import TransactionItem from "../TransactionItem/TransactionItem";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect } from "react";
-import ExpenseForm from "./ExpenseForm";
 
+const expenseOptions = [
+    { text: 'Select option', value: '', disabled: true },
+    { text: 'Education', value: 'education' },
+    { text: 'Groceries', value: 'groceries' },
+    { text: 'Health', value: 'health' },
+    { text: 'Subscriptions', value: 'subscriptions' },
+    { text: 'Takeaways', value: 'takeaways' },
+    { text: 'Clothing', value: 'clothing' },
+    { text: 'Travelling', value: 'travelling' },
+    { text: 'Other', value: 'other' }
+];
 
 const Expense = () => {
-    const { expenses, getExpenses, deleteExpense, totalExpenses } = useGlobalContext();
+    const { expenses, getExpenses, deleteExpense, totalExpenses, setError } = useGlobalContext();
 
     useEffect(() => {
         getExpenses();
+        setError('');
+        // eslint-disable-next-line
     }, [])
 
     return (
         <IncomeStyled>
             <InnerLayout>
                 <h1>Expenses</h1>
-                <h2 className="total-income">
+                <h2 className="total-expense">
                     Total Expense: <span>${totalExpenses()}</span>
                 </h2>
-                <div className="income-content">
+                <div className="expense-content">
                     <div className="form-container">
-                        <ExpenseForm />
+                        <TransactionForm
+                            type={'expense'}
+                            options={expenseOptions}
+                            btnText={'Add Expense'}
+                        />
                     </div>
-                    <div className="incomes">
+                    <div className="expenses">
                         {expenses && expenses.map(income => {
                             const { _id, title, amount, date, category, description } = income;
-                            return <IncomeItem 
+                            return <TransactionItem 
                                 key={_id}
                                 id={_id}
                                 type={'expense'}
@@ -37,7 +53,7 @@ const Expense = () => {
                                 date={date}
                                 category={category}
                                 description={description}
-                                indicatorColor={'var(--color-green)'}
+                                indicatorColor={'var(--color-red)'}
                                 deleteItem={deleteExpense}
                             />
                         })}
@@ -51,7 +67,7 @@ const Expense = () => {
 const IncomeStyled = styled.div`
     display: flex;
     overflow: auto;
-    .total-income{
+    .total-expense{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -66,13 +82,13 @@ const IncomeStyled = styled.div`
         span{
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--color-green);
+            color: var(--color-red);
         }
     }
-    .income-content{
+    .expense-content{
         display: flex;
         gap: 2rem;
-        .incomes{
+        .expenses{
             flex: 1;
         }
     }

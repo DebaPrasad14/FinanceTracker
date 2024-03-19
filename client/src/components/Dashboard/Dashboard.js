@@ -21,6 +21,10 @@ const Dashboard = () => {
     const getMax = (arr) => {
         return arr.length > 0 ? Math.max(...arr.map(item => item.amount)) : 0;
     }
+
+    const balanceStyle = () => {
+        return { color: totalBalance < 0 ? 'var(--color-red)' : 'var(--color-green)' };
+    }
     
     return (
         <DashboardStyled>
@@ -32,15 +36,15 @@ const Dashboard = () => {
                         <div className="amount-con">
                             <div className="income">
                                 <h2>Total income</h2>
-                                <p>{dollar} {totalIncomes()}</p>
+                                <p style={{color: 'var(--color-green)'}}>{dollar} {totalIncomes()}</p>
                             </div>
                             <div className="expense">
                                 <h2>Total expense</h2>
-                                <p>{dollar} {totalExpenses()}</p>
+                                <p style={{color: 'var(--color-red)'}}>{dollar} {totalExpenses()}</p>
                             </div>
                             <div className="balance">
                                 <h2>Total balance</h2>
-                                <p>{dollar} {totalBalance()}</p>
+                                <p style={balanceStyle()}>{dollar} {totalBalance()}</p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +90,7 @@ const DashboardStyled = styled.div`
                 border-radius: 20px;
                 padding: 1rem;
                 p{
-                    font-size: 3.5rem;
+                    font-size: 2rem;
                     font-weight: 700;
                 }
             }
@@ -98,9 +102,7 @@ const DashboardStyled = styled.div`
                 justify-content: center;
                 align-items: center;
                 p{
-                    color: var(--color-green);
-                    opacity: 0.6;
-                    font-size: 4.5rem;
+                    font-size: 2rem;
                 }
             }
         }

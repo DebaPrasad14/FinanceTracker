@@ -13,12 +13,12 @@ const History = () => {
                 return (
                     <div className="history-item" key={_id}>
                         <p style={{
-                            color: type === 'expense' ? 'red' : 'var(--color-green)'
+                            color: type === 'expense' ? 'var(--color-red)' : 'var(--color-green)'
                         }}>
                             {title}
                         </p>
                         <p style={{
-                            color: type === 'expense' ? 'red' : 'var(--color-green)'
+                            color: type === 'expense' ? 'var(--color-red)' : 'var(--color-green)'
                         }}>
                             { type === 'expense' ? '-' : '+'} {amount}
                         </p>
