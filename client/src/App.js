@@ -1,11 +1,32 @@
+import { lazy } from "react";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import styled from "styled-components";
 import bg from "./images/bg.png";
 import { MainLayout } from "./styles/Layout";
 import Navigation from "./components/Navigation/Navigation";
-import { useState } from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Income from "./components/Income/Income";
-import Expense from "./components/Expense/Expense";
+
+const Dashboard = lazy(() => import ("./components/Dashboard/Dashboard"));
+const Income = lazy(() => import ("./components/Income/Income"));
+const Expense = lazy(() => import ("./components/Expense/Expense"))
+
+function App() {
+  return (
+    <Router>
+      <AppStyled bg={bg} className="App">
+        <MainLayout>
+          <Navigation />
+          <main>
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/incomes" element={<Income />} />
+              <Route path="/expenses" element={<Expense />} />
+            </Routes>
+          </main>
+        </MainLayout>
+      </AppStyled>
+    </Router>
+  );
+}
 
 const AppStyled = styled.div`
   height: 100vh;
@@ -24,28 +45,5 @@ const AppStyled = styled.div`
     }
   }
 `;
-
-function App() {
-  const [active, setActive] = useState(1);
-
-  const displayData = () => {
-    return (
-      (active === 3 && <Income />) ||
-      (active === 4 && <Expense />) ||
-      <Dashboard />
-    );
-  }
-
-  return (
-    <AppStyled bg={bg} className="App">
-      <MainLayout>
-        <Navigation active={active} setActive={setActive} />
-        <main>
-          {displayData()}
-        </main>
-      </MainLayout>
-    </AppStyled>
-  );
-}
 
 export default App;

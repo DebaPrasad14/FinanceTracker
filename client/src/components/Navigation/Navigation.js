@@ -1,10 +1,26 @@
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components"
 import avatar from "../../images/avatar.png";
 import { menuItems } from "../../utils/menuItems";
 import { signout } from "../../utils/icons";
+import { useEffect, useState, startTransition } from "react";
 
 
-const Navigation = ({active, setActive}) => {
+const Navigation = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [active, setActive] = useState(location.state.id);
+
+    useEffect(() => {
+        setActive(location.state.id);
+    }, [location])
+
+    const handleClick = (item) => {
+        startTransition(() => {
+            navigate(item.link, { state: { id: item.id }});
+        });
+    };
+
     return (
         <NavStyled>
             <div className="user-container">
@@ -16,7 +32,7 @@ const Navigation = ({active, setActive}) => {
             </div>
             <ul className="menu-items">
                 { menuItems.map(item => 
-                    <li key={item.id} onClick={() => setActive(item.id)} className={item.id === active ? 'active' : ''}>
+                    <li key={item.id} onClick={() => handleClick(item)} className={item.id === active ? 'active' : ''}>
                         {item.icon} <span>{item.title}</span>
                     </li>
                 )}
