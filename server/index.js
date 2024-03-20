@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { db } = require('./db/database');
 const { readdirSync } = require('fs');
+const  cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -10,7 +11,11 @@ const PORT = process.env.PORT;
 
 // middlewares
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    credentials: true
+}));
+app.use(cookieParser());
 
 // routes
 readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)));

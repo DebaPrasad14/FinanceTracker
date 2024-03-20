@@ -7,11 +7,11 @@ import Button from "../Button/Button";
 import { plus } from "../../utils/icons";
 
 const initialInput = {
-    title: '',
-    amount: '',
-    date: '',
-    category: '',
-    description: ''
+    title: "",
+    amount: "",
+    date: "",
+    category: "",
+    description: "",
 };
 
 const TransactionForm = ({ type, options, btnText }) => {
@@ -20,50 +20,66 @@ const TransactionForm = ({ type, options, btnText }) => {
     const [formValid, setFormValid] = useState(null);
     const { title, amount, date, category, description } = inputState;
 
-    const handleInput = (name) => e => {
+    const handleInput = (name) => (e) => {
         setInputState({ ...inputState, [name]: e.target.value });
-        setError('');
-    }
+        setError("");
+    };
 
     const checkFormFields = () => {
-        if (inputState.title.trim() && 
-            inputState.amount.trim() &&
-            inputState.date &&
-            inputState.category.trim() &&
-            inputState.description.trim()
+        if (
+            title.trim() &&
+            amount.trim() &&
+            date &&
+            category.trim() &&
+            description.trim()
         ) {
             setFormValid(true);
-            setError('');
+            setError("");
         } else {
             setFormValid(false);
-            setError('Fill all required fields');
+            setError("Fill all required fields");
         }
-    }
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         checkFormFields();
         if (formValid) {
-            type === 'income' ? addIncome(inputState) : addExpense(inputState);
+            type === "income" ? addIncome(inputState) : addExpense(inputState);
             setInputState(initialInput);
         }
-    }
+    };
 
     const handleKeyPress = (event) => {
-        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'];
-        const isAllowedKey = event.key === '.' || (event.key >= '0' && event.key <= '9') || allowedKeys.includes(event.key);
+        const allowedKeys = [
+            "Backspace",
+            "Delete",
+            "ArrowLeft",
+            "ArrowRight",
+            "Tab",
+            "Home",
+            "End",
+        ];
+        const isAllowedKey =
+            event.key === "." ||
+            (event.key >= "0" && event.key <= "9") ||
+            allowedKeys.includes(event.key);
         if (!isAllowedKey) {
             event.preventDefault();
         }
-    }
+    };
 
     const optionItem = () => {
         return options.map((optionItem) => (
-            <option key={optionItem.value} value={optionItem.value} disabled={optionItem.disabled || false}>
+            <option
+                key={optionItem.value}
+                value={optionItem.value}
+                disabled={optionItem.disabled || false}
+            >
                 {optionItem.text}
             </option>
         ));
-    }
+    };
 
     return (
         <FormStyled onSubmit={handleSubmit}>
@@ -73,7 +89,8 @@ const TransactionForm = ({ type, options, btnText }) => {
                     name="title"
                     value={title}
                     placeholder="Enter title"
-                    onChange={handleInput('title')}
+                    autoComplete="off"
+                    onChange={handleInput("title")}
                 />
             </div>
             <div className="input-control">
@@ -82,20 +99,28 @@ const TransactionForm = ({ type, options, btnText }) => {
                     name="amount"
                     value={amount}
                     placeholder="Enter amount"
+                    autoComplete="off"
                     onKeyDown={handleKeyPress}
-                    onChange={handleInput('amount')}
+                    onChange={handleInput("amount")}
                 />
             </div>
             <div className="input-control">
                 <DatePicker
-                    placeholderText={'Enter a date'}
+                    placeholderText={"Enter a date"}
                     selected={date}
                     dateFormat="dd/MM/yyyy"
-                    onChange={(date) => setInputState({ ...inputState, date: date})}
+                    onChange={(date) =>
+                        setInputState({ ...inputState, date: date })
+                    }
                 />
             </div>
             <div className="selects input-control">
-                <select id="category" name="category" value={category} onChange={handleInput('category')}>
+                <select
+                    id="category"
+                    name="category"
+                    value={category}
+                    onChange={handleInput("category")}
+                >
                     {optionItem()}
                 </select>
             </div>
@@ -104,61 +129,64 @@ const TransactionForm = ({ type, options, btnText }) => {
                     id="description"
                     name="description"
                     value={description}
-                    placeholder='Add a reference'
+                    placeholder="Add a reference"
+                    autoComplete="off"
                     cols="30"
                     rows="4"
-                    onChange={handleInput('description')}
+                    onChange={handleInput("description")}
                 ></textarea>
             </div>
             {error && <div className="error">{error}</div>}
             <div className="submit-btn">
-                <Button 
+                <Button
                     name={btnText}
                     icon={plus}
-                    bpad={'0.8rem 1.6rem'}
-                    bRad={'30px'}
-                    bg={'var(--color-accent)'}
-                    color={'#fff'}
+                    bpad={"0.8rem 1.6rem"}
+                    bRad={"30px"}
+                    bg={"var(--color-accent)"}
+                    color={"#fff"}
                 ></Button>
             </div>
         </FormStyled>
-    )
-}
-
+    );
+};
 
 const FormStyled = styled.form`
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    input, textarea, select{
+    input,
+    textarea,
+    select {
         font-family: inherit;
         font-size: inherit;
         outline: none;
         border: none;
-        padding: .5rem 1rem;
+        padding: 0.5rem 1rem;
         border-radius: 5px;
         border: 2px solid #fff;
         background: transparent;
         resize: none;
         box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
         color: rgba(34, 34, 96, 0.9);
-        &::placeholder{
+        &::placeholder {
             color: rgba(34, 34, 96, 0.4);
         }
     }
-    .input-control{
-        input{
+    .input-control {
+        input {
             width: 100%;
         }
     }
 
-    .selects{
+    .selects {
         display: flex;
         justify-content: flex-end;
-        select{
+        select {
             color: rgba(34, 34, 96, 0.4);
             width: 100%;
-            &:focus, &:active{
+            &:focus,
+            &:active {
                 color: rgba(34, 34, 96, 1);
             }
         }
@@ -168,15 +196,14 @@ const FormStyled = styled.form`
         width: 100%;
     }
 
-    .submit-btn{
-        button{
+    .submit-btn {
+        button {
             box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-            &:hover{
+            &:hover {
                 background: var(--color-green) !important;
             }
         }
     }
 `;
-
 
 export default TransactionForm;

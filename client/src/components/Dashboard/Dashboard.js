@@ -5,13 +5,28 @@ import { useGlobalContext } from "../../context/GlobalContext";
 import { dollar } from "../../utils/icons";
 import { useEffect } from "react";
 import History from "../History/History";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-    const { getIncomes, getExpenses, incomes, expenses, totalIncomes, totalExpenses, totalBalance, transactionHistory } = useGlobalContext();
+    const { getIncomes, getExpenses, incomes, expenses, totalIncomes, totalExpenses, totalBalance, verify } = useGlobalContext();
+    const navigate = useNavigate();
     
     useEffect(() => {
+        // const getAuthStatus = async () => {
+        //     try {
+        //         const response = await verify();
+        //     } catch (error) {
+        //         if(error?.status === 401) {
+        //             navigate("/login");
+        //         }
+        //         console.error("Error verifying authentication:", error);
+        //     }
+        // };
+
+        // getAuthStatus();
         getIncomes();
         getExpenses();
+        // eslint-disable-next-line
     }, []);
 
     const getMin = (arr) => {

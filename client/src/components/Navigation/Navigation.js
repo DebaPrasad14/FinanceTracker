@@ -1,22 +1,23 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import styled from "styled-components"
+import styled from "styled-components";
 import avatar from "../../images/avatar.png";
 import { menuItems } from "../../utils/menuItems";
 import { signout } from "../../utils/icons";
 import { useEffect, useState, startTransition } from "react";
-
+import { useGlobalContext } from "../../context/GlobalContext";
 
 const Navigation = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [active, setActive] = useState(1);
+    const { signOut } = useGlobalContext();
 
     useEffect(() => {
-        findIdByLink(location.pathname)
-    }, [location])
+        findIdByLink(location.pathname);
+    }, [location]);
 
     const findIdByLink = (link) => {
-        const menuItem = menuItems.find(item => item.link === link);
+        const menuItem = menuItems.find((item) => item.link === link);
         setActive((menuItem && menuItem.id) || null);
     };
 
@@ -24,6 +25,17 @@ const Navigation = () => {
         startTransition(() => {
             navigate(item.link);
         });
+    };
+
+    const handleSignout = async () => {
+        try {
+            const response = await signOut();
+            if (response.status === 200) {
+                navigate("/login");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -36,83 +48,93 @@ const Navigation = () => {
                 </div>
             </div>
             <ul className="menu-items">
-                { menuItems.map(item => 
-                    <li key={item.id} onClick={() => handleClick(item)} className={item.id === active ? 'active' : ''}>
+                {menuItems.map((item) => (
+                    <li
+                        key={item.id}
+                        onClick={() => handleClick(item)}
+                        className={item.id === active ? "active" : ""}
+                    >
                         {item.icon} <span>{item.title}</span>
                     </li>
-                )}
+                ))}
             </ul>
             <div className="button-nav">
-                <li>{signout} Sign Out</li>
+                <a onClick={handleSignout}>
+                    {signout} {"Sign Out"}
+                </a>
             </div>
         </NavStyled>
-    )
-}
+    );
+};
 
 const NavStyled = styled.nav`
     padding: 2rem 1.5rem;
     width: 374px;
     height: 100%;
     background: rgba(252, 246, 249, 0.78);
-    border: 3px solid #FFFFFF;
+    border: 3px solid #ffffff;
     backdrop-filter: blur(4.5px);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 2rem;
-    .user-container{
+    .user-container {
         height: 100px;
         display: flex;
         align-items: center;
         gap: 1rem;
-        img{
+        img {
             width: 80px;
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
             background: #fcf6f9;
-            border: 2px solid #FFFFFF;
-            padding: .2rem;
+            border: 2px solid #ffffff;
+            padding: 0.2rem;
             box-shadow: 0px 1px 17px rgba(0, 0, 0, 0.06);
         }
-        h2{
+        h2 {
             color: rgba(34, 34, 96, 1);
         }
-        p{
-            color: rgba(34, 34, 96, .6);
+        p {
+            color: rgba(34, 34, 96, 0.6);
         }
     }
 
-    .menu-items{
+    .menu-items {
         flex: 1;
         display: flex;
         flex-direction: column;
-        li{
+        li {
             display: grid;
             grid-template-columns: 40px auto;
             align-items: center;
-            margin: .6rem 0;
+            margin: 0.6rem 0;
             font-weight: 500;
             cursor: pointer;
-            transition: all .4s ease-in-out;
-            color: rgba(34, 34, 96, .6);
+            transition: all 0.4s ease-in-out;
+            color: rgba(34, 34, 96, 0.6);
             padding-left: 1rem;
             position: relative;
-            i{
+            i {
                 color: rgba(34, 34, 96, 0.6);
                 font-size: 1.4rem;
-                transition: all .4s ease-in-out;
+                transition: all 0.4s ease-in-out;
             }
         }
     }
-
-    .active{
+    .button-nav {
+        a {
+            cursor: pointer;
+        }
+    }
+    .active {
         color: rgba(34, 34, 96, 1) !important;
-        i{
+        i {
             color: rgba(34, 34, 96, 1) !important;
         }
-        &::before{
+        &::before {
             content: "";
             position: absolute;
             left: 0;

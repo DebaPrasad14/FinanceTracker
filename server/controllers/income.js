@@ -12,10 +12,10 @@ const addIncome = async(req, res) => {
 
     try {
         if(!title || !amount || !category || !date) {
-            res.status(400).json({ message: 'All fields are required' });
+            return res.status(400).json({ message: 'All fields are required' });
         }
         if(amount < 0 || !amount === 'number') {
-            res.status(400).json({ message: 'Amount must be a number' });
+            return res.status(400).json({ message: 'Amount must be a number' });
         }
 
         await income.save();

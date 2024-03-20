@@ -1,13 +1,14 @@
 import styled from "styled-components"
 
-const Button = ({ name, icon, onClick, bg, bpad, color, bRad }) => {
+const Button = ({ name, icon, onClick, bg, bpad, color, bRad, minWidth }) => {
     return (
         <ButtonStyled 
             style={{
                 background: bg,
                 padding: bpad,
                 borderRadius: bRad,
-                color: color
+                color: color,
+                minWidth: minWidth
             }}
             onClick={onClick}
         >
@@ -23,6 +24,7 @@ const ButtonStyled = styled.button`
     font-family: inherit;
     font-size: inherit;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 0.5rem;
     cursor: pointer;
