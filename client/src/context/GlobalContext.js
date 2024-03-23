@@ -8,7 +8,6 @@ export const GlobalProvider = ({ children }) => {
     const [incomes, setIncomes] = useState([]);
     const [expenses, setExpenses] = useState([]);
     const [error, setError] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     axios.defaults.withCredentials = true;
 
@@ -32,7 +31,10 @@ export const GlobalProvider = ({ children }) => {
 
     const forgotPassword = async (input) => {
         try {
-            const response = await axios.post(`${BASE_URL}forgot-password`, input);
+            const response = await axios.post(
+                `${BASE_URL}forgot-password`,
+                input
+            );
             return response;
         } catch (error) {
             throw error.response.data.message;
@@ -43,7 +45,10 @@ export const GlobalProvider = ({ children }) => {
         axios.defaults.withCredentials = true;
 
         try {
-            const response = await axios.post(`${BASE_URL}reset-password/${token}`, input);
+            const response = await axios.post(
+                `${BASE_URL}reset-password/${token}`,
+                input
+            );
             return response;
         } catch (error) {
             throw error.response.data.message;
@@ -57,7 +62,7 @@ export const GlobalProvider = ({ children }) => {
         } catch (error) {
             throw error.response;
         }
-    }
+    };
 
     const signOut = async () => {
         axios.defaults.withCredentials = true;
@@ -68,7 +73,7 @@ export const GlobalProvider = ({ children }) => {
         } catch (error) {
             throw error.response.data.message;
         }
-    }
+    };
 
     const addIncome = async (income) => {
         await axios.post(`${BASE_URL}add-income`, income).catch((err) => {
@@ -88,6 +93,13 @@ export const GlobalProvider = ({ children }) => {
 
     const deleteIncome = async (id) => {
         await axios.delete(`${BASE_URL}delete-income/${id}`).catch((err) => {
+            setError(err.message);
+        });
+        getIncomes();
+    };
+
+    const updateIncome = async (input) => {
+        await axios.patch(`${BASE_URL}update-income`, input).catch((err) => {
             setError(err.message);
         });
         getIncomes();
@@ -124,6 +136,13 @@ export const GlobalProvider = ({ children }) => {
         getExpenses();
     };
 
+    const updateExpense = async (input) => {
+        await axios.patch(`${BASE_URL}update-expense`, input).catch((err) => {
+            setError(err.message);
+        });
+        getExpenses();
+    };
+
     const totalExpenses = () => {
         let totalExpenseValue = 0;
         expenses.forEach((expense) => {
@@ -151,11 +170,13 @@ export const GlobalProvider = ({ children }) => {
                 addIncome,
                 getIncomes,
                 deleteIncome,
+                updateIncome,
                 totalIncomes,
                 expenses,
                 addExpense,
                 getExpenses,
                 deleteExpense,
+                updateExpense,
                 totalExpenses,
                 totalBalance,
                 transactionHistory,
@@ -166,7 +187,7 @@ export const GlobalProvider = ({ children }) => {
                 forgotPassword,
                 resetPassword,
                 verify,
-                signOut
+                signOut,
             }}
         >
             {children}

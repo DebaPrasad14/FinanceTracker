@@ -1,22 +1,22 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Button = ({ name, icon, onClick, bg, bpad, color, bRad, minWidth }) => {
     return (
-        <ButtonStyled 
+        <ButtonStyled
             style={{
                 background: bg,
                 padding: bpad,
                 borderRadius: bRad,
                 color: color,
-                minWidth: minWidth
+                minWidth: minWidth,
             }}
             onClick={onClick}
         >
             {icon}
             {name}
         </ButtonStyled>
-    )
-}
+    );
+};
 
 const ButtonStyled = styled.button`
     outline: none;

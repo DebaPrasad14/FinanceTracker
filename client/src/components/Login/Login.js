@@ -4,7 +4,6 @@ import Button from "../Button/Button";
 import { useNavigate, Link } from "react-router-dom";
 import { Card, FormStyled } from "../../styles/AuthFormStyle";
 
-
 const initialInput = {
     email: "",
     password: "",
@@ -89,7 +88,13 @@ const SignIn = () => {
                         ></Button>
                     </div>
                     <div className="footer-texts">
-                        <Link to="/forgotPassword" reloadDocument>{'Forgot password'}</Link>
+                        <Link
+                            className="link"
+                            to="/forgotPassword"
+                            reloadDocument
+                        >
+                            {"Forgot password"}
+                        </Link>
                         <p>
                             {"Not registered?"}{" "}
                             <Link to="/signup" reloadDocument>

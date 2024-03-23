@@ -59,9 +59,9 @@ const Navigation = () => {
                 ))}
             </ul>
             <div className="button-nav">
-                <a onClick={handleSignout}>
+                <li onClick={handleSignout}>
                     {signout} {"Sign Out"}
-                </a>
+                </li>
             </div>
         </NavStyled>
     );
@@ -125,7 +125,7 @@ const NavStyled = styled.nav`
         }
     }
     .button-nav {
-        a {
+        li {
             cursor: pointer;
         }
     }

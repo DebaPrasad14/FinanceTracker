@@ -6,7 +6,7 @@ import { Card, FormStyled } from "../../styles/AuthFormStyle";
 
 const initialInput = {
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
 };
 
 const ResetPassword = () => {
@@ -101,6 +101,5 @@ const ResetPassword = () => {
         </FormStyled>
     );
 };
-
 
 export default ResetPassword;

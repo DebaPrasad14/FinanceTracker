@@ -59,6 +59,12 @@ const FormStyled = styled.form`
             font-weight: bold;
         }
     }
+    .footer-texts {
+        .link {
+            display: block;
+            margin-bottom: 6px;
+        }
+    }
 `;
 
 export { Card, FormStyled };

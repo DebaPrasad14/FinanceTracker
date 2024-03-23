@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Card, FormStyled } from "../../styles/AuthFormStyle";
 
 const initialInput = {
-    email: ""
+    email: "",
 };
 
 const ForgotPassword = () => {
@@ -90,6 +90,5 @@ const ForgotPassword = () => {
         </FormStyled>
     );
 };
-
 
 export default ForgotPassword;

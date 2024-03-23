@@ -1,49 +1,66 @@
-const IncomeSchema = require('../models/incomeModel');
+const IncomeSchema = require("../models/incomeModel");
 
-const addIncome = async(req, res) => {
-    const {title, amount, category, description, date} = req.body;
+const addIncome = async (req, res) => {
+    const { title, amount, category, description, date } = req.body;
     const income = IncomeSchema({
         title,
         amount,
         date,
         category,
-        description
+        description,
     });
 
     try {
-        if(!title || !amount || !category || !date) {
-            return res.status(400).json({ message: 'All fields are required' });
+        if (!title || !amount || !category || !date) {
+            return res.status(400).json({ message: "All fields are required" });
         }
-        if(amount < 0 || !amount === 'number') {
-            return res.status(400).json({ message: 'Amount must be a number' });
+        if (amount < 0 || !amount === "number") {
+            return res.status(400).json({ message: "Amount must be a number" });
         }
 
         await income.save();
-        res.status(200).json({ message: 'Income added' });
+        res.status(200).json({ message: "Income added" });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const getIncome = async (req, res) => {
     try {
         const incomes = await IncomeSchema.find().sort({ createdAt: -1 });
         res.status(200).json(incomes);
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
 
 const deleteIncome = async (req, res) => {
-    console.log(req);
     const { id } = req.params;
     IncomeSchema.findByIdAndDelete(id)
         .then((income) => {
-            res.status(200).json({ message: 'Income deleted' });
+            res.status(200).json({ message: "Income deleted" });
         })
         .catch((error) => {
-            res.status(500).json({ message: 'Internal server error' });
-        })
-}
+            res.status(500).json({ message: "Internal server error" });
+        });
+};
 
-module.exports = { addIncome, getIncome, deleteIncome };
+const updateIncome = async (req, res) => {
+    const { id, title, amount, category, description, date } = req.body;
+    const payload = {
+        title,
+        amount,
+        category,
+        description,
+        date,
+    };
+    IncomeSchema.findByIdAndUpdate(id, payload)
+        .then((income) => {
+            res.status(200).json({ message: "Income updated", id: income.id });
+        })
+        .catch((error) => {
+            res.status(500).json({ message: "Internal server error" });
+        });
+};
+
+module.exports = { addIncome, getIncome, deleteIncome, updateIncome };

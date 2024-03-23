@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useGlobalContext } from "../../context/GlobalContext";
 import Button from "../Button/Button";
-import { plus } from "../../utils/icons";
 
 const initialInput = {
     title: "",
@@ -14,11 +13,37 @@ const initialInput = {
     description: "",
 };
 
-const TransactionForm = ({ type, options, btnText }) => {
-    const { addIncome, addExpense, error, setError } = useGlobalContext();
+const TransactionForm = ({
+    type,
+    options,
+    data,
+    btnText,
+    btnIcon,
+    formType,
+    closeDialog,
+}) => {
+    const {
+        addIncome,
+        addExpense,
+        updateIncome,
+        updateExpense,
+        error,
+        setError,
+    } = useGlobalContext();
     const [inputState, setInputState] = useState(initialInput);
     const [formValid, setFormValid] = useState(null);
     const { title, amount, date, category, description } = inputState;
+
+    useEffect(() => {
+        setInputState({
+            title: data?.title,
+            amount: data?.amount.toString(),
+            date: data?.date,
+            category: data?.category,
+            description: data?.description,
+        });
+        setFormValid(true);
+    }, [data]);
 
     const handleInput = (name) => (e) => {
         setInputState({ ...inputState, [name]: e.target.value });
@@ -27,11 +52,11 @@ const TransactionForm = ({ type, options, btnText }) => {
 
     const checkFormFields = () => {
         if (
-            title.trim() &&
-            amount.trim() &&
+            title?.trim() &&
+            amount?.trim() &&
             date &&
-            category.trim() &&
-            description.trim()
+            category?.trim() &&
+            description?.trim()
         ) {
             setFormValid(true);
             setError("");
@@ -45,8 +70,22 @@ const TransactionForm = ({ type, options, btnText }) => {
         event.preventDefault();
         checkFormFields();
         if (formValid) {
-            type === "income" ? addIncome(inputState) : addExpense(inputState);
-            setInputState(initialInput);
+            if (formType === "add") {
+                type === "income"
+                    ? addIncome(inputState)
+                    : addExpense(inputState);
+                setInputState(initialInput);
+            } else if (formType === "update") {
+                const updatedInput = {
+                    ...inputState,
+                    id: data._id,
+                };
+                type === "income"
+                    ? updateIncome(updatedInput)
+                    : updateExpense(updatedInput);
+                setInputState(initialInput);
+                closeDialog();
+            }
         }
     };
 
@@ -140,7 +179,7 @@ const TransactionForm = ({ type, options, btnText }) => {
             <div className="submit-btn">
                 <Button
                     name={btnText}
-                    icon={plus}
+                    icon={btnIcon}
                     bpad={"0.8rem 1.6rem"}
                     bRad={"30px"}
                     bg={"var(--color-accent)"}

@@ -1,4 +1,5 @@
-import {Chart as ChartJs, 
+import {
+    Chart as ChartJs,
     CategoryScale,
     LinearScale,
     PointElement,
@@ -9,7 +10,7 @@ import {Chart as ChartJs,
     ArcElement,
 } from "chart.js";
 
-import {Line} from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { dateFormat } from "../../utils/dateFormat";
@@ -23,50 +24,50 @@ ChartJs.register(
     Tooltip,
     Legend,
     ArcElement
-)
+);
 
 const Chart = () => {
     const { incomes, expenses } = useGlobalContext();
     const data = {
-        labels: incomes.map(income => {
+        labels: incomes.map((income) => {
             const { date } = income;
             return dateFormat(date);
         }),
         datasets: [
             {
-                label: 'Incomes',
+                label: "Incomes",
                 data: [
-                    ...incomes.map(income => {
-                        const {amount} = income;
+                    ...incomes.map((income) => {
+                        const { amount } = income;
                         return amount;
-                    })
+                    }),
                 ],
-                backgroundColor: 'green',
-                tension: 0.2
+                backgroundColor: "green",
+                tension: 0.2,
             },
             {
-                label: 'Expenses',
+                label: "Expenses",
                 data: [
-                    ...expenses.map(expense => {
-                        const {amount} = expense;
+                    ...expenses.map((expense) => {
+                        const { amount } = expense;
                         return amount;
-                    })
+                    }),
                 ],
-                backgroundColor: 'red',
-                tension: 0.2
-            }
-        ]
-    }
+                backgroundColor: "red",
+                tension: 0.2,
+            },
+        ],
+    };
     return (
         <ChartStyled>
             <Line data={data} />
         </ChartStyled>
-    )
-}
+    );
+};
 
 const ChartStyled = styled.div`
-    background: #FCF6F9;
-    border: 2px solid #FFFFFF;
+    background: #fcf6f9;
+    border: 2px solid #ffffff;
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
     padding: 1rem;
     border-radius: 20px;

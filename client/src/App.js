@@ -11,7 +11,8 @@ const ForgotPassword = lazy(() => import("./components/ForgotPassword/ForgotPass
 const ResetPassword = lazy(() => import("./components/ResetPassword/ResetPassword"));
 const Dashboard = lazy(() => import ("./components/Dashboard/Dashboard"));
 const Income = lazy(() => import ("./components/Income/Income"));
-const Expense = lazy(() => import ("./components/Expense/Expense"))
+const Expense = lazy(() => import ("./components/Expense/Expense"));
+const Profile = lazy(() => import("./components/Profile/Profile"));
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Navigation />
                 <main>
                   <Routes>
+                    <Route path="/profile" element={<Profile />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/incomes" element={<Income />} />
                     <Route path="/expenses" element={<Expense />} />
