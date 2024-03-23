@@ -85,10 +85,34 @@ const IncomeItem = ({
     };
 
     return (
-        <IncomeItemStyled indicator={indicatorColor}>
-            <div className="icon">{categoryIcon()}</div>
+        <TransactionItemStyled indicator={indicatorColor}>
             <div className="content">
-                <h5>{title}</h5>
+                <div className="title-content">
+                    <div className="title-left">
+                        {categoryIcon()}
+                        <h5>{title.charAt(0).toUpperCase()}{title.slice(1)}</h5>
+                    </div>
+                    <div className="btn-con">
+                        <Button
+                            name={"Edit"}
+                            bpad={"3px 8px"}
+                            bRad={"2px"}
+                            fontSize={"12px"}
+                            bg={"var(--color-blue)"}
+                            color={"var(--color-white)"}
+                            onClick={() => handleEdit()}
+                        ></Button>
+                        <Button
+                            name={"Delete"}
+                            bpad={"3px 8px"}
+                            bRad={"2px"}
+                            fontSize={"12px"}
+                            bg={"var(--color-delete)"}
+                            color={"var(--color-white)"}
+                            onClick={() => deleteItem(id)}
+                        ></Button>
+                    </div>
+                </div>
                 <div className="inner-content">
                     <div className="text">
                         <p>
@@ -100,28 +124,6 @@ const IncomeItem = ({
                         <p>
                             {comment} {description}
                         </p>
-                    </div>
-                    <div className="btn-con">
-                        <Button
-                            icon={trash}
-                            bpad={"1rem"}
-                            bRad={"50%"}
-                            bg={"inherit"}
-                            color={"var(--primary-color)"}
-                            iColor={"#fff"}
-                            hColor={"var(--color-green)"}
-                            onClick={() => deleteItem(id)}
-                        ></Button>
-                        <Button
-                            icon={edit}
-                            bpad={"1rem"}
-                            bRad={"50%"}
-                            bg={"inherit"}
-                            color={"var(--primary-color)"}
-                            iColor={"#fff"}
-                            hColor={"var(--color-green)"}
-                            onClick={() => handleEdit()}
-                        ></Button>
                     </div>
                 </div>
             </div>
@@ -136,15 +138,14 @@ const IncomeItem = ({
                     closeDialog={closeDialog}
                 />
             </Dialog>
-        </IncomeItemStyled>
+        </TransactionItemStyled>
     );
 };
 
-const IncomeItemStyled = styled.div`
+const TransactionItemStyled = styled.div`
     background: #fcf6f9;
     border: 2px solid #ffffff;
-    box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 1rem;
     margin-bottom: 1rem;
     display: flex;
@@ -152,42 +153,49 @@ const IncomeItemStyled = styled.div`
     gap: 1rem;
     width: 100%;
     color: #222260;
-    .icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 20px;
-        background: #f5f5f5;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid #ffffff;
-        i {
-            font-size: 2.6rem;
-        }
-    }
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 5px solid;
+    border-left-color: ${(props) => props.indicator};
 
     .content {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 0.2rem;
+        gap: 0.5rem;
         h5 {
             font-size: 1.3rem;
-            padding-left: 2rem;
             position: relative;
-            &::before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 0.8rem;
-                height: 0.8rem;
-                border-radius: 50%;
-                background: ${(props) => props.indicator};
+        }
+        // .btn-con::before {
+        //     content: "";
+        //     position: absolute;
+        //     left: 0;
+        //     top: 50%;
+        //     transform: translateY(-50%);
+        //     width: 0.8rem;
+        //     height: 0.8rem;
+        //     border-radius: 50%;
+        //     background: ${(props) => props.indicator};
+        // }
+
+        .title-content {
+            display: flex;
+            justify-content: space-between;
+            i {
+                font-size: 1.25rem;
+            }
+            .btn-con {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .title-left {
+                display: flex;
+                align-items: center;
+                gap: 12px;
             }
         }
-
         .inner-content {
             display: flex;
             justify-content: space-between;
@@ -202,6 +210,9 @@ const IncomeItemStyled = styled.div`
                     gap: 0.5rem;
                     color: var(--primary-color);
                     opacity: 0.8;
+                }
+                i {
+                    font-size: 1rem;
                 }
             }
         }

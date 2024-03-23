@@ -46,7 +46,7 @@ const TransactionForm = ({
     }, [data]);
 
     const handleInput = (name) => (e) => {
-        setInputState({ ...inputState, [name]: e.target.value });
+        setInputState({ ...inputState, [name]: e.target.value || "" });
         setError("");
     };
 
@@ -184,6 +184,7 @@ const TransactionForm = ({
                     bRad={"30px"}
                     bg={"var(--color-accent)"}
                     color={"#fff"}
+                    fontSize={"16px"}
                 ></Button>
             </div>
         </FormStyled>
@@ -233,15 +234,6 @@ const FormStyled = styled.form`
 
     .react-datepicker-wrapper {
         width: 100%;
-    }
-
-    .submit-btn {
-        button {
-            box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-            &:hover {
-                background: var(--color-green) !important;
-            }
-        }
     }
 `;
 

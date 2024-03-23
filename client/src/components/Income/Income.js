@@ -22,7 +22,6 @@ const Income = () => {
         incomes,
         getIncomes,
         deleteIncome,
-        updateIncome,
         totalIncomes,
         setError,
     } = useGlobalContext();
@@ -73,7 +72,6 @@ const Income = () => {
 
 const IncomeStyled = styled.div`
     display: flex;
-    overflow: auto;
     .total-income {
         display: flex;
         justify-content: center;
@@ -81,7 +79,7 @@ const IncomeStyled = styled.div`
         background: #fcf6f9;
         border: 2px solid #ffffff;
         box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
-        border-radius: 20px;
+        border-radius: 5px;
         padding: 1rem;
         margin: 1rem 0;
         font-size: 2rem;

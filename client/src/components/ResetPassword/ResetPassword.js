@@ -86,6 +86,7 @@ const ResetPassword = () => {
                             bg={"var(--color-accent)"}
                             color={"#fff"}
                             minWidth={"200px"}
+                            fontSize={"16px"}
                         ></Button>
                     </div>
                     <div className="footer-texts">
