@@ -126,7 +126,7 @@ export const GlobalProvider = ({ children }) => {
             .catch((err) => {
                 setError(err.message);
             });
-        setExpenses(response.data);
+        setExpenses(response?.data);
     };
 
     const deleteExpense = async (id) => {
@@ -145,7 +145,7 @@ export const GlobalProvider = ({ children }) => {
 
     const totalExpenses = () => {
         let totalExpenseValue = 0;
-        expenses.forEach((expense) => {
+        expenses?.forEach((expense) => {
             totalExpenseValue += expense.amount;
         });
         return totalExpenseValue;

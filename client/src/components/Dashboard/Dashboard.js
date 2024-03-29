@@ -6,6 +6,7 @@ import { dollar } from "../../utils/icons";
 import { useEffect } from "react";
 import History from "../History/History";
 import { useNavigate } from "react-router-dom";
+import AppWrapper from "../HOC/AppWrapper";
 
 const Dashboard = () => {
     const {
@@ -39,11 +40,11 @@ const Dashboard = () => {
     }, []);
 
     const getMin = (arr) => {
-        return arr.length > 0 ? Math.min(...arr.map((item) => item.amount)) : 0;
+        return arr?.length > 0 ? Math.min(...arr.map((item) => item.amount)) : 0;
     };
 
     const getMax = (arr) => {
-        return arr.length > 0 ? Math.max(...arr.map((item) => item.amount)) : 0;
+        return arr?.length > 0 ? Math.max(...arr.map((item) => item.amount)) : 0;
     };
 
     const balanceStyle = () => {
@@ -179,4 +180,4 @@ const DashboardStyled = styled.div`
     }
 `;
 
-export default Dashboard;
+export default AppWrapper(Dashboard);

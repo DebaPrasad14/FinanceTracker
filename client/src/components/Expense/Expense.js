@@ -5,6 +5,7 @@ import TransactionItem from "../TransactionItem/TransactionItem";
 import { useGlobalContext } from "../../context/GlobalContext";
 import { useEffect } from "react";
 import { plus } from "../../utils/icons";
+import AppWrapper from "../HOC/AppWrapper";
 
 const expenseOptions = [
     { text: "Select option", value: "", disabled: true },
@@ -95,4 +96,4 @@ const IncomeStyled = styled.div`
     }
 `;
 
-export default Expense;
+export default AppWrapper(Expense);

@@ -1,17 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { InnerLayout } from "../../styles/Layout";
+import AppWrapper from "../HOC/AppWrapper";
 
 const Profile = () => {
     return (
         <ProfileStyled>
             <InnerLayout>
-                <div className="user-details">
-
-                </div>
-                <div className="user-settings">
-                    
-                </div>
+                <div className="user-details"> profile</div>
+                <div className="user-settings"></div>
             </InnerLayout>
         </ProfileStyled>
     );
@@ -19,4 +16,4 @@ const Profile = () => {
 
 const ProfileStyled = styled.div``;
 
-export default Profile;
+export default AppWrapper(Profile);

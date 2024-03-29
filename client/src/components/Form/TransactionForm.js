@@ -35,14 +35,16 @@ const TransactionForm = ({
     const { title, amount, date, category, description } = inputState;
 
     useEffect(() => {
-        setInputState({
-            title: data?.title,
-            amount: data?.amount.toString(),
-            date: data?.date,
-            category: data?.category,
-            description: data?.description,
-        });
-        setFormValid(true);
+        if(data) {
+            setInputState({
+                title: data?.title,
+                amount: data?.amount.toString(),
+                date: data?.date,
+                category: data?.category,
+                description: data?.description,
+            });
+            setFormValid(true);
+        }
     }, [data]);
 
     const handleInput = (name) => (e) => {
@@ -180,9 +182,9 @@ const TransactionForm = ({
                 <Button
                     name={btnText}
                     icon={btnIcon}
-                    bpad={"0.8rem 1.6rem"}
+                    bpad={"0.75rem 1.25rem"}
                     bRad={"30px"}
-                    bg={"var(--color-accent)"}
+                    bg={"var(--color-blue)"}
                     color={"#fff"}
                     fontSize={"16px"}
                 ></Button>
@@ -209,8 +211,12 @@ const FormStyled = styled.form`
         resize: none;
         box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
         color: rgba(34, 34, 96, 0.9);
+        
         &::placeholder {
             color: rgba(34, 34, 96, 0.4);
+        }
+        & > option:checked {
+            color: rgba(34, 34, 96, 0.9); /* Adjust color as needed */
         }
     }
     .input-control {

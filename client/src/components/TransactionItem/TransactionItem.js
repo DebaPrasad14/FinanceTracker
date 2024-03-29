@@ -15,8 +15,6 @@ import {
     piggy,
     stocks,
     takeaway,
-    trash,
-    edit,
     tv,
     users,
     yt,
@@ -27,7 +25,7 @@ import { lazy, useState } from "react";
 import TransactionForm from "../Form/TransactionForm";
 const Dialog = lazy(() => import("../Dialog/Dialog"));
 
-const IncomeItem = ({
+const TransactionItem = ({
     transactionData,
     deleteItem,
     indicatorColor,
@@ -219,4 +217,4 @@ const TransactionItemStyled = styled.div`
     }
 `;
 
-export default IncomeItem;
+export default TransactionItem;
